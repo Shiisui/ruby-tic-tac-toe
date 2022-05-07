@@ -1,7 +1,4 @@
-# Create a board of tictactoe
-# Create nested arrays 3 rows 3 columns
-# add them values 1..9
-
+require 'pry-byebug'
 initial_board = [
     [1, 2, 3],
     [4, 5, 6],
@@ -9,8 +6,8 @@ initial_board = [
 ]
 
 module CheckWin
-    
     def check_win(array)
+        # binding.pry
         win_1 = [1,2,3]
         win_2 = [4,5,6]
         win_3 = [7,8,9]
@@ -19,7 +16,12 @@ module CheckWin
         win_6 = [1,4,7]
         win_7 = [2,5,8]
         win_8 = [3,6,9]
-        array == win_1 || win_2 || win_3 || win_4 || win_5 || win_6 || win_7 || win_8
+
+        array = array.sort
+
+        # do a search through array to find the numbers from wins and declare win if theres win
+         
+        
     end
 end
 
@@ -34,12 +36,14 @@ class Player
         @player_character = player_character
         @player_num = []
     end
+
     def player_num(num)
         @player_num << num
     end
     
     def check_winn
-        return check_win(@player_num)
+        $result = check_win(@player_num)
+        binding.pry
     end
 end
 
@@ -53,10 +57,16 @@ puts "Player Two Name?"
 player_two_name = gets.chomp
 player_two = Player.new(player_two_name, "O")
 
-# Make the board interactive with the user
-# Ask the user input and store it
 game = true
 player_turn = 1
+
+        puts "###################"
+        puts "|  #{initial_board[0][0]}  |  #{initial_board[0][1]}  |  #{initial_board[0][2]}  |"
+        puts "###################"
+        puts "|  #{initial_board[1][0]}  |  #{initial_board[1][1]}  |  #{initial_board[1][2]}  |"
+        puts "###################"
+        puts "|  #{initial_board[2][0]}  |  #{initial_board[2][1]}  |  #{initial_board[2][2]}  |"
+        puts "###################"
 
 until (game == false)
     game = true
@@ -68,7 +78,7 @@ until (game == false)
 
         if player_turn == 1 && game == true
             
-            puts player_one.player
+            puts "~~~~~~~~~~~~~~~~~~~ \n\n#{player_one.player} your turn!\n\n~~~~~~~~~~~~~~~~~~~"
             num = gets.chomp.to_i
             player_one.player_num(num)
 
@@ -86,13 +96,13 @@ until (game == false)
             end
             player_turn = 2
             
-            if player_one.check_winn == true
+            if player_one.check_winn == "Yep"
                 game = false
             end
 
         elsif player_turn == 2 && game == true
 
-            puts player_two.player 
+            puts "~~~~~~~~~~~~~~~~~~~ \n\n#{player_two.player} your turn!\n\n~~~~~~~~~~~~~~~~~~~"
             num2 = gets.chomp.to_i
             player_two.player_num(num2)
 
@@ -108,31 +118,26 @@ until (game == false)
                 
             end
             player_turn = 1
-            if player_two.check_winn == true
+            if player_two.check_winn == "Yep"
                 game = false
             end
         end
 
+        
         count += 1
 
         if count == 9
           game = false
         end
-        puts "--------------------"
+        puts "###################"
         puts "|  #{game_board[0][0]}  |  #{game_board[0][1]}  |  #{game_board[0][2]}  |"
-        puts "--------------------"
+        puts "###################"
         puts "|  #{game_board[1][0]}  |  #{game_board[1][1]}  |  #{game_board[1][2]}  |"
-        puts "--------------------"
+        puts "###################"
         puts "|  #{game_board[2][0]}  |  #{game_board[2][1]}  |  #{game_board[2][2]}  |"
-        puts "--------------------"
+        puts "###################"
     end
    
 end
 
-# display output given the input
 
-# let x and o play turn by turn
-
-# always check if theres a winner
-
-# display the winner and stop the game
