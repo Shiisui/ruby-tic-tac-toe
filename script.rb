@@ -8,17 +8,37 @@ initial_board = [
     [7, 8, 9]
 ]
 
+module CheckWin
+    
+
+    def check_win(array)
+        win_1 = [1,2,3]
+        win_2 = [4,5,6]
+        win_3 = [7,8,9]
+        win_4 = [1,5,9]
+        win_5 = [3,5,7]
+        win_6 = [1,4,7]
+        win_7 = [2,5,8]
+        win_8 = [3,6,9]
+        array == win_1 || win_2 || win_3 || win_4 || win_5 || win_6 || win_7 || win_8
+    end
+end
+
 class Player
     attr_reader :player, :player_character
+    attr_reader :player_num
     def initialize(player, player_character)
         @player = player
         @player_character = player_character
-        @player_input = []
+        @player_num = []
     end
-    def player_input(num)
-        @player_input << num
+    def player_num(num)
+        @player_num << num
     end
-
+    include CheckWin
+    def check_winn
+        p check_win(@player_num)
+    end
 end
 
 
@@ -44,11 +64,11 @@ until (game == false)
     until (game == false)
         
 
-        if player_turn == 1
+        if player_turn == 1 && game == true
             
             puts player_one.player
             num = gets.chomp.to_i
-            player_one.player_input(num)
+            player_one.player_num(num)
 
             game_board.map! do |row|
                 row.map! do |column|
@@ -63,12 +83,16 @@ until (game == false)
                 
             end
             player_turn = 2
-       
-        elsif player_turn == 2
+            
+            if player_one.check_winn == true
+                game = false
+            end
+
+        elsif player_turn == 2 && game == true
 
             puts player_two.player 
             num2 = gets.chomp.to_i
-            player_two.player_input(num2)
+            player_two.player_num(num2)
 
             game_board.map! do |row2|
                 row2.map! do |column2|
@@ -82,16 +106,18 @@ until (game == false)
                 
             end
             player_turn = 1
+            if player_two.check_winn == true
+                game = false
+            end
         end
 
         count += 1
 
         if count == 9
-            game = false
+          game = false
         end
 
         p game_board
-        
     end
 end
 
@@ -102,4 +128,3 @@ end
 # always check if theres a winner
 
 # display the winner and stop the game
-
