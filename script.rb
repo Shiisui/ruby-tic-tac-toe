@@ -118,9 +118,15 @@ until (game == false)
         if count == 9
           game = false
         end
-
-        p game_board
+        puts "--------------------"
+        puts "|  #{game_board[0][0]}  |  #{game_board[0][1]}  |  #{game_board[0][2]}  |"
+        puts "--------------------"
+        puts "|  #{game_board[1][0]}  |  #{game_board[1][1]}  |  #{game_board[1][2]}  |"
+        puts "--------------------"
+        puts "|  #{game_board[2][0]}  |  #{game_board[2][1]}  |  #{game_board[2][2]}  |"
+        puts "--------------------"
     end
+   
 end
 
 # display output given the input
