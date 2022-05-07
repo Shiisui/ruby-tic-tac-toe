@@ -13,8 +13,15 @@ class Player
     def initialize(player, player_character)
         @player = player
         @player_character = player_character
+        @player_input = []
     end
+    def player_input(num)
+        @player_input << num
+    end
+
 end
+
+
 
 puts "Player One Name?"
 player_one_name = gets.chomp
@@ -28,19 +35,24 @@ puts player_one.player_character
 puts player_two.player_character
 # Make the board interactive with the user
 # Ask the user input and store it
-game == true
+game = true
 
 until (game == false)
     game = true
     game_board = initial_board
     display_board = []
     until (game == false)
-        game_board.select do |row|
-            row.select do |column|
-                column == player_input
+        puts "Enter a number"
+        num = gets.chomp.to_i
+        player_one.player_input(num)
+
+        game_board.map! do |row|
+            row.map! do |column|
+               (column == num) ? column = player_one.player_character : column
             end
         end
-
+        p game_board
+        game = false
         
     end
 end
