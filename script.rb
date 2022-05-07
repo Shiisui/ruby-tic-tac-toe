@@ -31,11 +31,10 @@ puts "Player Two Name?"
 player_two_name = gets.chomp
 player_two = Player.new(player_two_name, "O")
 
-puts player_one.player_character
-puts player_two.player_character
 # Make the board interactive with the user
 # Ask the user input and store it
 game = true
+player_turn = 1
 
 until (game == false)
     game = true
@@ -43,16 +42,48 @@ until (game == false)
     display_board = []
     count = 0
     until (game == false)
-        puts "Enter a number"
-        num = gets.chomp.to_i
-        player_one.player_input(num)
+        
 
-        game_board.map! do |row|
-            row.map! do |column|
-               (column == num) ? column = player_one.player_character : column
+        if player_turn == 1
+            
+            puts player_one.player
+            num = gets.chomp.to_i
+            player_one.player_input(num)
+
+            game_board.map! do |row|
+                row.map! do |column|
+                
+                    if column == num 
+                        column = player_one.player_character
+                    else
+                        column = column
+                    end
+                    
+                end
                 
             end
+            player_turn = 2
+       
+        elsif player_turn == 2
+
+            puts player_two.player 
+            num2 = gets.chomp.to_i
+            player_two.player_input(num2)
+
+            game_board.map! do |row2|
+                row2.map! do |column2|
+                    if column2 == num2 
+                        column2 = player_two.player_character
+                    else
+                        column2 = column2
+                    end
+                
+                end
+                
+            end
+            player_turn = 1
         end
+
         count += 1
 
         if count == 9
