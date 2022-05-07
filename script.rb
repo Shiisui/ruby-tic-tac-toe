@@ -41,6 +41,7 @@ until (game == false)
     game = true
     game_board = initial_board
     display_board = []
+    count = 0
     until (game == false)
         puts "Enter a number"
         num = gets.chomp.to_i
@@ -49,10 +50,16 @@ until (game == false)
         game_board.map! do |row|
             row.map! do |column|
                (column == num) ? column = player_one.player_character : column
+                
             end
         end
+        count += 1
+
+        if count == 9
+            game = false
+        end
+
         p game_board
-        game = false
         
     end
 end
