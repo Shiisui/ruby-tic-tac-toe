@@ -10,7 +10,6 @@ initial_board = [
 
 module CheckWin
     
-
     def check_win(array)
         win_1 = [1,2,3]
         win_2 = [4,5,6]
@@ -27,6 +26,9 @@ end
 class Player
     attr_reader :player, :player_character
     attr_reader :player_num
+    
+    include CheckWin
+
     def initialize(player, player_character)
         @player = player
         @player_character = player_character
@@ -35,9 +37,9 @@ class Player
     def player_num(num)
         @player_num << num
     end
-    include CheckWin
+    
     def check_winn
-        p check_win(@player_num)
+        return check_win(@player_num)
     end
 end
 
