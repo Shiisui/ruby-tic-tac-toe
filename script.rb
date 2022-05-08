@@ -11,9 +11,12 @@ module CheckWin
         winner = ""
         # horizontal
         array.each do |row|
+            
             if row.all?("X")
+
                 winner = "X"
             elsif row.all?("O")
+
                 winner = "O"
             end
         end
@@ -22,22 +25,27 @@ module CheckWin
         r = -1
         # diagonal
         3.times do 
+
                 if array[l][l] == "X" && array[l+1][l+1] == "X" && array[l+2][l+2] == "X" || array[l][r] == "X" && array[l+1][l+1] == "X" && array[l+2][l] == "X"
+
                     winner = "X"
                 elsif array[l][l] == "O" && array[l+1][l+1] == "O" && array[l+2][l+2] == "O" ||  array[l][r] == "O" && array[l+1][l+1] == "O" && array[l+2][l] == "O"
+
                     winner = "O"
                 end
             end
     
-
         j = 0
         3.times do 
             # vertical
             if array[0][j] == "X" && array[1][j]  == "X" && array[2][j] == "X"
+
                 winner = "X"
             elsif array[0][j] == "O" && array[1][j] == "O" && array[2][j] == "O"
+
                 winner = "O"
             end
+
             j += 1
         end
 
@@ -55,8 +63,6 @@ class Player
         @player_character = player_character
     end
 end
-
-
 
 puts "Player One Name?"
 player_one_name = gets.chomp
@@ -78,15 +84,15 @@ player_turn = 1
         puts "###################"
 
 until (game == false)
+
     game = true
     game_board = initial_board
     display_board = []
     count = 0
     until (game == false)
-        
-
+    
         if player_turn == 1 && game == true
-            
+        
             puts "~~~~~~~~~~~~~~~~~~~ \n\n#{player_one.player} your turn!\n\n~~~~~~~~~~~~~~~~~~~"
             num = gets.chomp.to_i
             game_board.map! do |row|
@@ -99,37 +105,43 @@ until (game == false)
                     end
                 end
             end
+
             player_turn = 2
-            
             if check_win(game_board) == "X"
+
                 game = false
-                puts "X WON"
+                puts "#{player_one.player} WON"
             end
 
         elsif player_turn == 2 && game == true
 
             puts "~~~~~~~~~~~~~~~~~~~ \n\n#{player_two.player} your turn!\n\n~~~~~~~~~~~~~~~~~~~"
             num2 = gets.chomp.to_i
-
             game_board.map! do |row2|
+
                 row2.map! do |column2|
+
                     if column2 == num2 
+
                         column2 = player_two.player_character
                     else
+
                         column2 = column2
                     end
                 end
             end
+
             player_turn = 1
             if check_win(game_board) == "O"
+
                 game = false
-                puts "O WON"
+                puts "#{player_two.player} WON"
             end
         end
 
         count += 1
-
         if count == 9
+
           game = false
         end
         puts "###################"
