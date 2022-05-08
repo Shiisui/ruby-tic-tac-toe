@@ -17,23 +17,19 @@ module CheckWin
                 winner = "O"
             end
         end
-        vertical = []
-        i = 0
-        b = 0
+        
+        l = 0
+        r = -1
         # diagonal
-        array.each do |row|
-
-            vertical << row[i] 
-            b += 1
-            if vertical.all?("X") && b == 3
-                vertical = []
-                winner = "X"
-            elsif vertical.all?("O") && b == 3
-                vertical = []
-                winner = "O"
+        3.times do 
+                if array[l][l] == "X" && array[l+1][l+1] == "X" && array[l+2][l+2] == "X" || array[l][r] == "X" && array[l+1][l+1] == "X" && array[l+2][l] == "X"
+                    winner = "X"
+                elsif array[l][l] == "O" && array[l+1][l+1] == "O" && array[l+2][l+2] == "O" ||  array[l][r] == "O" && array[l+1][l+1] == "O" && array[l+2][l] == "O"
+                    winner = "O"
+                end
             end
-            i += 1
-        end
+    
+
         j = 0
         3.times do 
             # vertical
