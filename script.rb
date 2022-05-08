@@ -1,4 +1,3 @@
-require 'pry-byebug'
 initial_board = [
     [1, 2, 3],
     [4, 5, 6],
@@ -6,44 +5,58 @@ initial_board = [
 ]
 
 module CheckWin
+
     def check_win(array)
-        # binding.pry
-        win_1 = [1,2,3]
-        win_2 = [4,5,6]
-        win_3 = [7,8,9]
-        win_4 = [1,5,9]
-        win_5 = [3,5,7]
-        win_6 = [1,4,7]
-        win_7 = [2,5,8]
-        win_8 = [3,6,9]
+    
+        winner = ""
+        # horizontal
+        array.each do |row|
+            if row.all?("X")
+                winner = "X"
+            elsif row.all?("O")
+                winner = "O"
+            end
+        end
+        vertical = []
+        i = 0
+        b = 0
+        # diagonal
+        array.each do |row|
 
-        array = array.sort
+            vertical << row[i] 
+            b += 1
+            if vertical.all?("X") && b == 3
+                vertical = []
+                winner = "X"
+            elsif vertical.all?("O") && b == 3
+                vertical = []
+                winner = "O"
+            end
+            i += 1
+        end
+        j = 0
+        3.times do 
+            # vertical
+            if array[0][j] == "X" && array[1][j]  == "X" && array[2][j] == "X"
+                winner = "X"
+            elsif array[0][j] == "O" && array[1][j] == "O" && array[2][j] == "O"
+                winner = "O"
+            end
+            j += 1
+        end
 
-        # do a search through array to find the numbers from wins and declare win if theres win
-         
-        
+        return winner
     end
 end
+include CheckWin
 
 class Player
     attr_reader :player, :player_character
     attr_reader :player_num
-    
-    include CheckWin
 
     def initialize(player, player_character)
         @player = player
         @player_character = player_character
-        @player_num = []
-    end
-
-    def player_num(num)
-        @player_num << num
-    end
-    
-    def check_winn
-        $result = check_win(@player_num)
-        binding.pry
     end
 end
 
@@ -61,11 +74,11 @@ game = true
 player_turn = 1
 
         puts "###################"
-        puts "|  #{initial_board[0][0]}  |  #{initial_board[0][1]}  |  #{initial_board[0][2]}  |"
+        puts "|  #{initial_board[2][0]}  |  #{initial_board[2][1]}  |  #{initial_board[2][2]}  |"
         puts "###################"
         puts "|  #{initial_board[1][0]}  |  #{initial_board[1][1]}  |  #{initial_board[1][2]}  |"
         puts "###################"
-        puts "|  #{initial_board[2][0]}  |  #{initial_board[2][1]}  |  #{initial_board[2][2]}  |"
+        puts "|  #{initial_board[0][0]}  |  #{initial_board[0][1]}  |  #{initial_board[0][2]}  |"
         puts "###################"
 
 until (game == false)
@@ -80,8 +93,6 @@ until (game == false)
             
             puts "~~~~~~~~~~~~~~~~~~~ \n\n#{player_one.player} your turn!\n\n~~~~~~~~~~~~~~~~~~~"
             num = gets.chomp.to_i
-            player_one.player_num(num)
-
             game_board.map! do |row|
                 row.map! do |column|
                 
@@ -90,21 +101,19 @@ until (game == false)
                     else
                         column = column
                     end
-                    
                 end
-                
             end
             player_turn = 2
             
-            if player_one.check_winn == "Yep"
+            if check_win(game_board) == "X"
                 game = false
+                puts "X WON"
             end
 
         elsif player_turn == 2 && game == true
 
             puts "~~~~~~~~~~~~~~~~~~~ \n\n#{player_two.player} your turn!\n\n~~~~~~~~~~~~~~~~~~~"
             num2 = gets.chomp.to_i
-            player_two.player_num(num2)
 
             game_board.map! do |row2|
                 row2.map! do |column2|
@@ -113,31 +122,27 @@ until (game == false)
                     else
                         column2 = column2
                     end
-                
                 end
-                
             end
             player_turn = 1
-            if player_two.check_winn == "Yep"
+            if check_win(game_board) == "O"
                 game = false
+                puts "O WON"
             end
         end
 
-        
         count += 1
 
         if count == 9
           game = false
         end
         puts "###################"
-        puts "|  #{game_board[0][0]}  |  #{game_board[0][1]}  |  #{game_board[0][2]}  |"
+        puts "|  #{game_board[2][0]}  |  #{game_board[2][1]}  |  #{game_board[2][2]}  |"
         puts "###################"
         puts "|  #{game_board[1][0]}  |  #{game_board[1][1]}  |  #{game_board[1][2]}  |"
         puts "###################"
-        puts "|  #{game_board[2][0]}  |  #{game_board[2][1]}  |  #{game_board[2][2]}  |"
+        puts "|  #{game_board[0][0]}  |  #{game_board[0][1]}  |  #{game_board[0][2]}  |"
         puts "###################"
     end
    
 end
-
-
