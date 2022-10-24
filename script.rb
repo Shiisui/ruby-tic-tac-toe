@@ -16,9 +16,11 @@ class Game
     print_board    
     loop do
       loc = @players[id].player_play
+      add_moves(id, loc)
       place_at(loc, player_form(id))
       print_board
-      check_win()
+      check = check_win
+      return if check == true
       id = player_switch(id)
     end
     
@@ -30,7 +32,11 @@ class Game
        x[idx] = form if y == loc
       end
     end
-  end 
+  end
+
+  def add_moves(id, loc)
+    @players[id].moves << loc
+  end
 
   def print_board
     @board.each { |x| print "#{x}\n" }
@@ -48,7 +54,7 @@ class Game
   end
 
   def check_win
-    
+    false
   end
 
 end
@@ -57,8 +63,9 @@ class Player
 
   def initialize(id)
     @id = id
+    @moves = []
   end
-  attr_accessor :id
+  attr_accessor :id, :moves
 
   def player_play
     player_id_turn
@@ -72,13 +79,18 @@ class Player
   def get_location
     loop do 
       location = gets.chomp.to_i
-      return location if valid_input(location)
+      return location if valid_input(location) && valid_move(location)
       print "error please enter a valid location for your move!\n\n"
     end
   end
 
   def valid_input(input)
-    
+    (1..9).any?(input)
+  end
+
+  def valid_move(move)
+    return true unless moves.include?(move)
+    return false
   end
 
 end
