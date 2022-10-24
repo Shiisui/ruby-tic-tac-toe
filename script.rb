@@ -48,7 +48,7 @@ class Game
   end
 
   def check_win
-
+    
   end
 
 end
@@ -70,7 +70,15 @@ class Player
   end
 
   def get_location
-    location = gets.chomp.to_i
+    loop do 
+      location = gets.chomp.to_i
+      return location if valid_input(location)
+      print "error please enter a valid location for your move!\n\n"
+    end
+  end
+
+  def valid_input(input)
+    
   end
 
 end
