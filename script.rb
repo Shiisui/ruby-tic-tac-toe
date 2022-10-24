@@ -38,7 +38,7 @@ class Player
 
   def player_play
     player_id_turn
-    place_at(get_location)
+    place_at(get_location, player_form)
 
   end
 
@@ -46,10 +46,19 @@ class Player
     location = gets.chomp
   end
 
-  def place_at
-    # place X or O at location
+  def place_at(loc, form)
+    # place X or O at location using location map to translate the location given by the human.
 
   end
+
+  def player_form
+    return 'X' if @id == 1
+    return 'O'
+  end
+
+  def location_map
+
+  end 
 
 end
 
