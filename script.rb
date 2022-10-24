@@ -19,8 +19,7 @@ class Game
       add_moves(id, loc)
       place_at(loc, player_form(id))
       print_board
-      check = check_win
-      return if check == true
+      return if check_win(id)
       id = player_switch(id)
     end
     
@@ -55,7 +54,23 @@ class Game
     return 'O'
   end
 
-  def check_win
+  def check_win(id)
+    moves = @players[id].valid_moves
+    winner = []
+    wins = [ [1,2,3], [4,5,6], [7,8,9], [1,5,9], [3,5,7], [1,4,7], [3,6,9] ]
+    winner = wins.each do |win|
+      win.each_with_index do |n, idx|
+        moves.each do |move|
+          win[idx] = "WIN" if move == n
+        end
+      end
+    end
+    winner.each do |w|
+      if w.all?("WIN")
+        puts "#{@players[id].id} Wins the game"
+        return true
+      end
+    end
     false
   end
 
