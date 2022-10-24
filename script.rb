@@ -1,156 +1,123 @@
-initial_board = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
+# frozen_string_literal: true
 
-module CheckWin
+# Game
+class Game
+  def initialize
+    @board = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9]
+    ]
+    @players = [Player.new(0), Player.new(1)]
+  end
+  attr_accessor :board, :players
 
-    def check_win(array)
-    
-        winner = ""
-        # horizontal
-        array.each do |row|
-            
-            if row.all?("X")
+  def play_game
+    id = 0
+    print_board
+    loop do
+      loc = @players[id].player_play
+      add_moves(id, loc)
+      place_at(loc, player_form(id))
+      print_board
+      return if check_win(id)
 
-                winner = "X"
-            elsif row.all?("O")
-
-                winner = "O"
-            end
-        end
-        
-        l = 0
-        r = -1
-        # diagonal
-        3.times do 
-
-                if array[l][l] == "X" && array[l+1][l+1] == "X" && array[l+2][l+2] == "X" || array[l][r] == "X" && array[l+1][l+1] == "X" && array[l+2][l] == "X"
-
-                    winner = "X"
-                elsif array[l][l] == "O" && array[l+1][l+1] == "O" && array[l+2][l+2] == "O" ||  array[l][r] == "O" && array[l+1][l+1] == "O" && array[l+2][l] == "O"
-
-                    winner = "O"
-                end
-            end
-    
-        j = 0
-        3.times do 
-            # vertical
-            if array[0][j] == "X" && array[1][j]  == "X" && array[2][j] == "X"
-
-                winner = "X"
-            elsif array[0][j] == "O" && array[1][j] == "O" && array[2][j] == "O"
-
-                winner = "O"
-            end
-
-            j += 1
-        end
-
-        return winner
+      id = player_switch(id)
     end
-end
-include CheckWin
+  end
 
+  def place_at(loc, form)
+    @board = @board.each do |x|
+      x.each_with_index do |y, idx|
+        x[idx] = form if y == loc
+      end
+    end
+  end
+
+  def add_moves(id, loc)
+    @players[0].moves << loc
+    @players[1].moves << loc
+    @players[id].valid_moves << loc
+  end
+
+  def print_board
+    @board.each { |x| print "#{x}\n" }
+    print "To play the game you have to enter the coordinates of the move, example for the top left corner: 1\n\n"
+  end
+
+  def player_switch(id)
+    return 1 if id.zero?
+
+    0
+  end
+
+  def player_form(id)
+    return 'X' if id.zero?
+
+    'O'
+  end
+
+  def check_win(id)
+    winner = winning_moves(id)
+    winner.each do |w|
+      if w.all?('WIN')
+        puts "#{@players[id].id} Wins the game"
+        return true
+      end
+    end
+    false
+  end
+
+  def winning_moves(id)
+    moves = @players[id].valid_moves
+    wins = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 5, 9], [3, 5, 7], [1, 4, 7], [3, 6, 9]]
+    wins.each do |win|
+      win.each_with_index do |n, idx|
+        moves.each do |move|
+          win[idx] = 'WIN' if move == n
+        end
+      end
+    end
+  end
+end
+
+# Player
 class Player
-    attr_reader :player, :player_character
-    attr_reader :player_num
+  def initialize(id)
+    @id = id
+    @moves = []
+    @valid_moves = []
+  end
+  attr_accessor :id, :moves, :valid_moves
 
-    def initialize(player, player_character)
-        @player = player
-        @player_character = player_character
+  def player_play
+    player_id_turn
+    obtain_location
+  end
+
+  def player_id_turn
+    print "#{@id} turn to play: \n"
+  end
+
+  def obtain_location
+    loop do
+      location = gets.chomp.to_i
+      return location if valid_input(location) && valid_move(location)
+
+      print "error please enter a valid location for your move!\n\n"
     end
+  end
+
+  def valid_input(input)
+    (1..9).any?(input)
+  end
+
+  def valid_move(move)
+    return true unless @moves.include?(move)
+
+    false
+  end
 end
 
-puts "Player One Name?"
-player_one_name = gets.chomp
-player_one = Player.new(player_one_name, "X")
-
-puts "Player Two Name?"
-player_two_name = gets.chomp
-player_two = Player.new(player_two_name, "O")
-
-game = true
-player_turn = 1
-
-        puts "###################"
-        puts "|  #{initial_board[2][0]}  |  #{initial_board[2][1]}  |  #{initial_board[2][2]}  |"
-        puts "###################"
-        puts "|  #{initial_board[1][0]}  |  #{initial_board[1][1]}  |  #{initial_board[1][2]}  |"
-        puts "###################"
-        puts "|  #{initial_board[0][0]}  |  #{initial_board[0][1]}  |  #{initial_board[0][2]}  |"
-        puts "###################"
-
-until (game == false)
-
-    game = true
-    game_board = initial_board
-    display_board = []
-    count = 0
-    until (game == false)
-    
-        if player_turn == 1 && game == true
-        
-            puts "~~~~~~~~~~~~~~~~~~~ \n\n#{player_one.player} your turn!\n\n~~~~~~~~~~~~~~~~~~~"
-            num = gets.chomp.to_i
-            game_board.map! do |row|
-                row.map! do |column|
-                
-                    if column == num 
-                        column = player_one.player_character
-                    else
-                        column = column
-                    end
-                end
-            end
-
-            player_turn = 2
-            if check_win(game_board) == "X"
-
-                game = false
-                puts "#{player_one.player} WON"
-            end
-
-        elsif player_turn == 2 && game == true
-
-            puts "~~~~~~~~~~~~~~~~~~~ \n\n#{player_two.player} your turn!\n\n~~~~~~~~~~~~~~~~~~~"
-            num2 = gets.chomp.to_i
-            game_board.map! do |row2|
-
-                row2.map! do |column2|
-
-                    if column2 == num2 
-
-                        column2 = player_two.player_character
-                    else
-
-                        column2 = column2
-                    end
-                end
-            end
-
-            player_turn = 1
-            if check_win(game_board) == "O"
-
-                game = false
-                puts "#{player_two.player} WON"
-            end
-        end
-
-        count += 1
-        if count == 9
-
-          game = false
-        end
-        puts "###################"
-        puts "|  #{game_board[2][0]}  |  #{game_board[2][1]}  |  #{game_board[2][2]}  |"
-        puts "###################"
-        puts "|  #{game_board[1][0]}  |  #{game_board[1][1]}  |  #{game_board[1][2]}  |"
-        puts "###################"
-        puts "|  #{game_board[0][0]}  |  #{game_board[0][1]}  |  #{game_board[0][2]}  |"
-        puts "###################"
-    end
-   
-end
+tictactoe = Game.new
+tictactoe.play_game
