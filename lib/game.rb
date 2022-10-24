@@ -20,7 +20,7 @@ class Game
       add_moves(id, loc)
       place_at(loc, player_form(id))
       print_board
-      return if check_win(id)
+      return if game_over(id)
 
       id = player_switch(id)
     end
@@ -57,7 +57,7 @@ class Game
     'O'
   end
 
-  def check_win(id)
+  def game_over(id)
     winner = winning_moves(id)
     winner.each do |w|
       if w.all?('WIN')
