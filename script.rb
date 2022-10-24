@@ -15,8 +15,11 @@ class Game
     id = 0
     print_board    
     loop do
-      @players[id].player_play
-
+      loc = @players[id].player_play
+      place_at(location_map(loc), player_form(id))
+      print_board
+      check_win()
+      id = player_switch(id)
     end
     
   end
@@ -27,8 +30,8 @@ class Game
   end
 
   def place_at(loc, form)
-    # return X or O using location map to translate the location given by the human.
-    
+    # place X or O at loc
+    @board[loc[0]][loc[1]] 
   end
 
   def player_switch(id)
@@ -42,9 +45,10 @@ class Game
   end 
 
   def location_map(player_loc)
-    @board.each do |location|
-        location.each do |x|
-            return [location, x] if x == player_loc
+    @board.each do |x|
+        x.each do |y|
+            print player_loc
+            return [x, y] if y == player_loc
         end
     end
   end
@@ -72,7 +76,7 @@ class Player
   end
 
   def get_location
-    location = gets.chomp
+    location = gets.chomp.to_i
   end
 
 end
