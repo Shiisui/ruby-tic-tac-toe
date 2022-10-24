@@ -16,7 +16,7 @@ class Game
     print_board    
     loop do
       loc = @players[id].player_play
-      place_at(location_map(loc), player_form(id))
+      place_at(loc, player_form(id))
       print_board
       check_win()
       id = player_switch(id)
@@ -24,14 +24,17 @@ class Game
     
   end
 
+  def place_at(loc, form)
+   @board = @board.each do |x|
+      x.each_with_index do |y, idx|
+       x[idx] = form if y == loc
+      end
+    end
+  end 
+
   def print_board
     @board.each { |x| print "#{x}\n" }
     print "To play the game you have to enter the coordinates of the move, example for the top left corner: 1\n\n"
-  end
-
-  def place_at(loc, form)
-    # place X or O at loc
-    @board[loc[0]][loc[1]] 
   end
 
   def player_switch(id)
@@ -42,15 +45,6 @@ class Game
   def player_form(id)
     return 'X' if id == 0
     return 'O'
-  end 
-
-  def location_map(player_loc)
-    @board.each do |x|
-        x.each do |y|
-            print player_loc
-            return [x, y] if y == player_loc
-        end
-    end
   end
 
   def check_win
