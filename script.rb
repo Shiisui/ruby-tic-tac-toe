@@ -35,7 +35,9 @@ class Game
   end
 
   def add_moves(id, loc)
-    @players[id].moves << loc
+    @players[0].moves << loc
+    @players[1].moves << loc
+    @players[id].valid_moves << loc
   end
 
   def print_board
@@ -64,8 +66,9 @@ class Player
   def initialize(id)
     @id = id
     @moves = []
+    @valid_moves = []
   end
-  attr_accessor :id, :moves
+  attr_accessor :id, :moves, :valid_moves
 
   def player_play
     player_id_turn
@@ -89,7 +92,7 @@ class Player
   end
 
   def valid_move(move)
-    return true unless moves.include?(move)
+    return true unless @moves.include?(move)
     return false
   end
 
