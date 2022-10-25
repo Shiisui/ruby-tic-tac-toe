@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require_relative './players'
+
 class Board
-  def initialize(players)
+  def initialize(players = [Player.new(0), Player.new(1)])
     @board = [
         [1, 2, 3],
         [4, 5, 6],
