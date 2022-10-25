@@ -6,11 +6,7 @@ require_relative './players'
 # Game
 class Game
   def initialize
-    @board = [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9]
-    ]
+    @board = Board.new
     @players = [Player.new(0), Player.new(1)]
   end
   attr_accessor :board, :players
