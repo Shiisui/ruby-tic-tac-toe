@@ -6,19 +6,18 @@ require_relative './players'
 # Game
 class Game
   def initialize
-    @board = Board.new
     @players = [Player.new(0), Player.new(1)]
+    @board = Board.new(@players)
   end
   attr_accessor :board, :players
 
   def play_game
     id = 0
-    print_board
     loop do
+      @board.print_board
       loc = @players[id].player_play
-      add_moves(id, loc)
-      place_at(loc, player_form(id))
-      print_board
+      @board.add_moves(id, loc)
+      @board.place_at(loc, player_form(id))
       return if game_over(id)
 
       id = player_switch(id)

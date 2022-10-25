@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class Board
-  def initialize
+  def initialize(players)
     @board = [
         [1, 2, 3],
         [4, 5, 6],
         [7, 8, 9]
       ]
+    @players = players
   end
 
   def place_at(loc, form) 
