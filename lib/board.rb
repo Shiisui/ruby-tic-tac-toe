@@ -10,10 +10,10 @@ class Board
     @players = players
   end
 
-  def place_at(loc, form) 
+  def place_at(loc, sym) 
     @board = @board.each do |x|
       x.each_with_index do |y, idx|
-        x[idx] = form if y == loc
+        x[idx] = sym if y == loc
       end
     end
   end

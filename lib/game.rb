@@ -16,7 +16,7 @@ class Game
     loop do
       loc = @players[id].player_play
       @board.add_moves(id, loc)
-      @board.place_at(loc, player_form(id))
+      @board.place_at(loc, player_symbol(id))
       @board.print_board
       return if game_over(id)
       
@@ -30,7 +30,7 @@ class Game
     0
   end
 
-  def player_form(id)
+  def player_symbol(id)
     return 'X' if id.zero?
 
     'O'
