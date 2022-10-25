@@ -17,9 +17,9 @@ class Player
     print "#{@id} turn to play: \n"
   end
 
-  def obtain_location
+  def obtain_location(location = nil)
     loop do
-      location = gets.chomp.to_i
+      location = gets.chomp.to_i if location.nil?
       return location if valid_input(location) && valid_move(location)
 
       puts "error please enter a valid location for your move!"
