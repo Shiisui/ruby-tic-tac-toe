@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative './board'
+require_relative './players'
+
 # Game
 class Game
   def initialize
@@ -104,7 +107,7 @@ class Player
       location = gets.chomp.to_i
       return location if valid_input(location) && valid_move(location)
 
-      print "error please enter a valid location for your move!\n\n"
+      puts "error please enter a valid location for your move!"
     end
   end
 
