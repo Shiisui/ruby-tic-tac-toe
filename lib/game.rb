@@ -3,7 +3,6 @@
 require_relative './board'
 require_relative './players'
 
-# Game
 class Game
   def initialize
     @players = [Player.new(0), Player.new(1)]
