@@ -79,7 +79,3 @@ class Game
     end
   end
 end
-
-
-tictactoe = Game.new
-tictactoe.play_game
