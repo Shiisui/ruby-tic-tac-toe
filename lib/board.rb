@@ -9,6 +9,7 @@ class Board
       ]
     @players = players
   end
+  attr_accessor :board, :players
 
   def place_at(loc, sym) 
     @board = @board.each do |x|
