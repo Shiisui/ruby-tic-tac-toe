@@ -13,13 +13,14 @@ class Game
 
   def play_game
     id = 0
+    @board.print_board
     loop do
-      @board.print_board
       loc = @players[id].player_play
       @board.add_moves(id, loc)
       @board.place_at(loc, player_form(id))
+      @board.print_board
       return if game_over(id)
-
+      
       id = player_switch(id)
     end
   end
