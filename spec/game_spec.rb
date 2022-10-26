@@ -19,11 +19,16 @@ RSpec.describe Game do
   end
 
   describe '#player_symbol' do
-    subject(:game) { Game.new }
     context 'when an id is given' do
+
+      let(:game) { instance_double(Game) }
       
+      before do
+        allow(game).to receive(:player_symbol).and_return("X")
+      end
+
       it 'returns X' do
-        expect(game.player_symbol(0)).to eq("X")
+        expect( game.player_symbol(0)).to eq("X")
       end
 
     end
@@ -41,13 +46,14 @@ RSpec.describe Game do
     end
 
     context 'when the top row reads X X X' do
+      subject(:win) { Game.new }
 
       before do
-        game.players[0].valid_moves=([1, 2, 3])
+        win.players[0].valid_moves=[1, 2, 3] 
       end
-      
+
       it 'returns true' do
-        expect(game.game_over(0)).to eq(true)
+        expect(win.game_over(0)).to eq(true)
       end
 
     end
