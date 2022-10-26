@@ -4,15 +4,20 @@ require_relative '../lib/players'
 
 RSpec.describe Player do
   
-  describe '#obtain_location' do
+  describe '#check_location' do
 
-    subject(:players) {described_class.new(0)}
+    subject(:player) {described_class.new(0)}
 
     context 'when a location is given' do
 
-        it 'returns an error message once' do
-          expect(players.obtain_location(10)).to receive().and_return("error please enter a valid location for your move!").exactly(1).time
-        end
+      before do
+        allow(player).to receive(:puts).and_return("error please enter a valid location for your move!").once
+      end
+
+      it 'returns an error message once' do
+        expect(player).to receive(:puts).and_return("error please enter a valid location for your move!").once
+        player.check_location(0)
+      end
 
     end
 

@@ -10,7 +10,7 @@ class Player
 
   def player_play
     player_turn
-    check_location(player_move)
+    location = check_location(player_move)
   end
 
   def player_turn
@@ -18,12 +18,10 @@ class Player
   end
 
   def player_move
-    loc = gets.chomp.to_i
+    gets.chomp.to_i
   end
 
-  def check_location(location = nil)
-    return if location.nil?
-
+  def check_location(location)
     return location if valid_input(location) && valid_move(location)
 
     puts "error please enter a valid location for your move!"
