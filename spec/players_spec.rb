@@ -19,6 +19,9 @@ RSpec.describe Player do
         player.check_location(0)
       end
 
+      it 'it returns the location' do
+        expect(player.check_location(1)).to eq(1)
+      end
     end
 
   end
