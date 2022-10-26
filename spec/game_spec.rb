@@ -40,6 +40,18 @@ RSpec.describe Game do
 
     end
 
+    context 'when the top row reads X X X' do
+
+      before do
+        game.players[0].valid_moves=([1, 2, 3])
+      end
+      
+      it 'returns true' do
+        expect(game.game_over(0)).to eq(true)
+      end
+
+    end
+
   end
 
   
