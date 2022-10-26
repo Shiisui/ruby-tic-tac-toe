@@ -10,7 +10,11 @@ class Player
 
   def player_play
     player_turn
-    location = check_location(player_move)
+    location = nil
+    until location
+      location = check_location(player_move)
+    end
+    location
   end
 
   def player_turn
