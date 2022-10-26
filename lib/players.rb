@@ -9,21 +9,24 @@ class Player
   attr_accessor :id, :moves, :valid_moves
 
   def player_play
-    player_id_turn
-    obtain_location
+    player_turn
+    check_location(player_move)
   end
 
-  def player_id_turn
+  def player_turn
     print "#{@id} turn to play: \n"
   end
 
-  def obtain_location(location = nil)
-    loop do
-      location = gets.chomp.to_i if location.nil?
-      return location if valid_input(location) && valid_move(location)
+  def player_move
+    loc = gets.chomp.to_i
+  end
 
-      puts "error please enter a valid location for your move!"
-    end
+  def check_location(location = nil)
+    return if location.nil?
+
+    return location if valid_input(location) && valid_move(location)
+
+    puts "error please enter a valid location for your move!"
   end
 
   def valid_input(input)

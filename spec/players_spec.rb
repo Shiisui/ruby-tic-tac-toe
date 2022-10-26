@@ -11,7 +11,7 @@ RSpec.describe Player do
     context 'when a location is given' do
 
         it 'returns an error message once' do
-        #   expect(players.obtain_location(10)).to receive().and_return("error please enter a valid location for your move!").once
+          expect(players.obtain_location(10)).to receive().and_return("error please enter a valid location for your move!").exactly(1).time
         end
 
     end
