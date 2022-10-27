@@ -50,4 +50,22 @@ RSpec.describe Player do
     
   end
 
+  describe '#player_play' do
+  subject(:player_loop) { described_class.new }
+    context 'when input is valid' do
+
+      before do
+        input = 3
+        allow(player_loop).to receive(:player_play).and_return(input)
+      end
+      
+      it 'stops the loop and does not display error message' do
+        expect(player_loop).not_to receive(:puts).with('error please enter a valid location for your move!')
+        player_loop.player_play
+      end
+
+    end
+
+  end
+
 end
