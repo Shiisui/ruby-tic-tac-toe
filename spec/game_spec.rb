@@ -37,7 +37,7 @@ RSpec.describe Game do
 
   describe '#game_over' do
     subject(:game) { Game.new }
-    context 'when an id is given' do
+    context 'when it is not game over' do
       
       it 'returns false' do
         expect(game.game_over(0)).to eq(false)
@@ -45,7 +45,7 @@ RSpec.describe Game do
 
     end
 
-    context 'when the top row reads X X X' do
+    context 'when it is game over' do
       subject(:win) { Game.new }
 
       before do
