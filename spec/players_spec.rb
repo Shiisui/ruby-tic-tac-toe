@@ -28,14 +28,27 @@ RSpec.describe Player do
 
   describe '#valid_input' do
     subject(:player_input) { described_class.new(0) }
+
     context 'when given a valid input as argument' do
 
       it 'returns valid input' do
         user_input = 1
         verified_input = player_input.valid_input(user_input)
-        expect(verified_input).to eq(1)
+        expect(verified_input).to be_truthy
       end
+
     end
+
+    context 'when given invalid input as argument' do
+
+      it 'returns nil' do
+        user_input = 0
+        verified_input = player_input.valid_input(user_input)
+        expect(verified_input).to be_falsy
+      end
+
+    end
+    
   end
 
 end

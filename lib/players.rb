@@ -17,11 +17,8 @@ class Player
     location
   end
 
-  def player_turn
-    print "#{@id} turn to play: \n"
-  end
-
-  def player_move
+  def player_input
+    print "#{@id} Choose a digit between 1 and 9: \n"
     gets.chomp.to_i
   end
 
