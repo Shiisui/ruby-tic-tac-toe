@@ -9,10 +9,12 @@ class Player
   attr_accessor :id, :moves, :valid_moves
 
   def player_play
-    player_turn
     location = nil
     until location
-      location = check_location(player_move)
+      location = check_location(player_input)
+      break if location
+
+      puts "error please enter a valid location for your move!"
     end
     location
   end
@@ -24,8 +26,6 @@ class Player
 
   def check_location(location)
     return location if valid_input(location) && valid_move(location)
-
-    puts "error please enter a valid location for your move!"
   end
 
   def valid_input(input)

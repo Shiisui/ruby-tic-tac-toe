@@ -10,17 +10,16 @@ RSpec.describe Player do
 
     context 'when a location is given' do
 
-      before do
-        allow(player).to receive(:puts).and_return("error please enter a valid location for your move!").once
-      end
-
-      it 'returns an error message once' do
-        expect(player).to receive(:puts).and_return("error please enter a valid location for your move!").once
-        player.check_location(0)
+      it 'returns nil' do
+        user_input = 0
+        result = player.check_location(user_input)
+        expect(result).to be_falsy
       end
 
       it 'it returns the location' do
-        expect(player.check_location(1)).to eq(1)
+        user_input = 1
+        result = player.check_location(user_input)
+        expect(result).to eq(result)
       end
     end
 
