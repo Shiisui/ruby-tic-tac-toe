@@ -32,7 +32,7 @@ class Player
   end
 
   def valid_input(input)
-    (1..9).any?(input)
+    return input if (1..9).include?(input)
   end
 
   def valid_move(move)
