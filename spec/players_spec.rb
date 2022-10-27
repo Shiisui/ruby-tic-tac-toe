@@ -78,6 +78,20 @@ RSpec.describe Player do
 
     end
 
+    context 'when user inputs two incorrect values, then a valid input' do
+      before do
+        letter = 'd'
+        symbol = '%'
+        valid = 8
+        allow(player_loop).to receive(:player_input).and_return(letter, symbol, valid)
+      end
+
+      it 'completes loop and displays error message twice' do
+        expect(player_loop).to receive(:puts).with('error please enter a valid location for your move!').twice
+        player_loop.player_play
+      end
+    end
+
   end
 
 end
